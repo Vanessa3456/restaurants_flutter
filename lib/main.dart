@@ -1,48 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/constants.dart';
-import 'package:restaurant/home.dart';
+
+import 'constants.dart';
+import 'home.dart';
+import 'models/cart_manager.dart';
+import 'models/order_manager.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Yummy());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class Yummy extends StatefulWidget {
+  const Yummy({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<Yummy> createState() => _YummyState();
 }
 
-class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
-  //TODO:Set up default theme and color
-    ThemeMode themeMode=ThemeMode.light;
+class _YummyState extends State<Yummy> {
+  ThemeMode themeMode = ThemeMode.light;
+  ColorSelection colorSelected = ColorSelection.pink;
 
-    ColorSelection colorSelected=ColorSelection.deepPurple;
+  /// Manage user's shopping cart for the items they order.
+  final CartManager _cartManager = CartManager();
 
-    //TODO:Add changeTheme above here
-    void changeThemeMode(bool useLightMode){
-      setState(() {
-        themeMode=useLightMode?ThemeMode.light:ThemeMode.dark;
-      });      
-    }
-    //TODO: Add changeColor above here
-    void changeColor(int value){
-      setState(() {
-        colorSelected=ColorSelection.values[value];
-      });
-    }
+  /// Manage user's orders submitted
+  final OrderManager _orderManager = OrderManager();
+
+  void changeThemeMode(bool useLightMode) {
+    setState(() {
+      themeMode = useLightMode
+          ? ThemeMode.light //
+          : ThemeMode.dark;
+    });
+  }
+
+  void changeColor(int value) {
+    setState(() {
+      colorSelected = ColorSelection.values[value];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    const appTitle='My Restaurant';
+    const appTitle = 'Yummy';
 
-    //TODO:Setup default theme
-    
     return MaterialApp(
       title: appTitle,
-      debugShowCheckedModeBanner: false,
-
-      //TODO:Add theme
+      debugShowCheckedModeBanner: false, // Uncomment to remove Debug banner
       themeMode: themeMode,
       theme: ThemeData(
         colorSchemeSeed: colorSelected.color,
@@ -55,8 +59,13 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.dark,
       ),
       home: Home(
-        changeTheme: changeThemeMode, changeColor: changeColor, colorSelected: colorSelected),
-
+        appTitle: appTitle,
+        cartManager: _cartManager,
+        ordersManager: _orderManager,
+        changeTheme: changeThemeMode,
+        changeColor: changeColor,
+        colorSelected: colorSelected,
+      ),
     );
-}
+  }
 }

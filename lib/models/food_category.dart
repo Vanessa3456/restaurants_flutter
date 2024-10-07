@@ -17,6 +17,6 @@ List<FoodCategory> categories = [
   FoodCategory('Pizza', 19, 'lib/imagess/pizza.png'),
   FoodCategory('Sushi', 15, 'lib/imagess/sushi.png'),
   FoodCategory('Coffee', 22, 'lib/imagess/coffee.png'),
-  FoodCategory('Fast Food', 23, 'lib/imagess/fast_food.png'),
+  FoodCategory('Fast Food', 23, 'lib/imagess/fastfood.png'),
   FoodCategory('Salad', 18, 'lib/imagess/salad.png'),
 ];
